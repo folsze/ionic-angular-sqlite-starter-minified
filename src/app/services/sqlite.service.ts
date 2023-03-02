@@ -60,35 +60,6 @@ export class SQLiteService {
     await this.sqlitePlugin.addUpgradeStatement(options);
     return;
   }
-  async isInConfigEncryption(): Promise<capSQLiteResult> {
-    return await this.sqliteConnection.isInConfigEncryption();
-  }
-  async isInConfigBiometricAuth(): Promise<capSQLiteResult> {
-    return await this.sqliteConnection.isInConfigBiometricAuth();
-  }
-  async isDatabaseEncrypted(database: string): Promise<capSQLiteResult> {
-    let res: capSQLiteResult = {result: false};
-    const isDB = (await this.sqliteConnection.isDatabase(database)).result;
-    if(!isDB) {
-      return {result: false};
-    }
-    return await this.sqliteConnection.isDatabaseEncrypted(database);
-  }
-  async isSecretStored(): Promise<capSQLiteResult> {
-      return await this.sqliteConnection.isSecretStored();
-  }
-  async setEncryptionSecret(passphrase: string): Promise<void> {
-      return await this.sqliteConnection.setEncryptionSecret(passphrase);
-  }
-  async clearEncryptionSecret(): Promise<void> {
-    return await this.sqliteConnection.clearEncryptionSecret();
-  }
-  async changeEncryptionSecret(passphrase: string, oldpassphrase: string): Promise<void> {
-      return await this.sqliteConnection.changeEncryptionSecret(passphrase, oldpassphrase);
-  }
-  async checkEncryptionSecret(passphrase: string): Promise<capSQLiteResult> {
-      return await this.sqliteConnection.checkEncryptionSecret(passphrase);
-  }
   async getDatabaseList(): Promise<capSQLiteValues> {
     return await this.sqliteConnection.getDatabaseList();
   }
@@ -134,22 +105,6 @@ export class SQLiteService {
         return Promise.reject(`save: insert changes != 1`);
       }
       return;
-  }
-  async unencryptCryptedDatabases(): Promise<void> {
-    const dbList: string[] = (await this.getDatabaseList()).values!;
-    for (let idx:number = 0; idx < dbList.length; idx++) {
-      const dbName = dbList[idx].split("SQLite.db")[0];
-      const isEncrypt = (await this.isDatabaseEncrypted(dbName)).result!;
-      if(isEncrypt) {
-        const version = this.dbVerService.getVersion(dbName)!;
-        const db = await this.openDatabase(dbName, true, "secret",
-                        version,false);
-        const jsonDB = (await db.exportToJson("full")).export!;
-        jsonDB.overwrite = true;
-        jsonDB.encrypted = false;
-        const res = await this.sqliteConnection.importFromJson(JSON.stringify(jsonDB));
-      }
-    }
   }
   async remove(mDb: SQLiteDBConnection, table: string, where: any): Promise<void> {
       const key: string = Object.keys(where)[0];

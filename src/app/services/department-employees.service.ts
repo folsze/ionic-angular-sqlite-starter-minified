@@ -53,18 +53,9 @@ export class DepartmentEmployeesService {
     await this.getAllData();
   }
   async openDatabase() {
-    if(this.sqliteService.native
-      && (await this.sqliteService.isInConfigEncryption()).result
-      && (await this.sqliteService.isDatabaseEncrypted(this.databaseName)).result) {
-      this.mDb = await this.sqliteService
-        .openDatabase(this.databaseName, true, "secret",
-                        this.loadToVersion,false);
-
-    } else {
-      this.mDb = await this.sqliteService
-        .openDatabase(this.databaseName, false, "no-encryption",
-                      this.loadToVersion,false);
-    }
+    this.mDb = await this.sqliteService
+      .openDatabase(this.databaseName, false, "no-encryption",
+                    this.loadToVersion,false);
   }
   async getAllData() {
     await this.getAllEmployees();

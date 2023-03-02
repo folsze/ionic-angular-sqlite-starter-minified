@@ -35,7 +35,6 @@ export class AuthorPostsService {
     this.databaseName = environment.databaseNames.filter(x => x.name.includes('posts'))[0].name;
   }
 
-
   async initializeDatabase() {
     // create upgrade statements
     await this.sqliteService
@@ -55,18 +54,9 @@ export class AuthorPostsService {
     await this.getAllData();
   }
   async openDatabase() {
-    if(this.sqliteService.native
-      && (await this.sqliteService.isInConfigEncryption()).result
-      && (await this.sqliteService.isDatabaseEncrypted(this.databaseName)).result) {
-      this.mDb = await this.sqliteService
-        .openDatabase(this.databaseName, true, "secret",
-                        this.loadToVersion,false);
-
-    } else {
       this.mDb = await this.sqliteService
         .openDatabase(this.databaseName, false, "no-encryption",
                       this.loadToVersion,false);
-    }
   }
   async getAllData() {
     await this.getAllAuthors();
