@@ -8,12 +8,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SQLiteService } from './services/sqlite.service';
 import { InitializeAppService } from './services/initialize.app.service';
-import { AuthorPostsService } from './services/author-posts.service';
 import { DepartmentEmployeesService } from './services/department-employees.service';
 import { DbnameVersionService } from './services/dbname-version.service';
-import { CategoryComponentModule } from './shared/components/author-posts/category.shared.module';
-import { AuthorComponentModule } from './shared/components/author-posts/author.shared.module';
-import { PostComponentModule } from './shared/components/author-posts/post.shared.module';
 
 export function initializeFactory(init: InitializeAppService) {
   return () => init.initializeApp();
@@ -22,11 +18,9 @@ export function initializeFactory(init: InitializeAppService) {
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(),
-    CategoryComponentModule, AuthorComponentModule, PostComponentModule,
     AppRoutingModule],
   providers: [SQLiteService,
     InitializeAppService,
-    AuthorPostsService,
     DepartmentEmployeesService,
     DbnameVersionService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

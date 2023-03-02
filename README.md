@@ -53,11 +53,8 @@ Category {
 
 Database schemas are defined using the `Incremental Upgrade Database Version` workflow in the folder `src/app/upgrades/author-posts/upgrade-statements` following the guidelines (https://github.com/capacitor-community/sqlite/blob/master/docs/IncrementalUpgradeDatabaseVersion.md).
 
-Initial data for database version 1 are provided in the file `src/app/mock-data/posts-categories-authors.ts`.
 
 Access to the @capacitor-community/sqlite plugin is made through the use of an angular service (`src/app/services/sqlite.service.ts`).
-
-`Authors-Posts-Categories` CRUD operations are accessible  through the use of an angular service (`src/app/services/author-posts.service.ts`).
 
 Initialization of the application is made in the angular service (`src/app/services/initialize.app.service.ts`) which instantiate the sqlite service, create database schemas and upload the mock data.
 

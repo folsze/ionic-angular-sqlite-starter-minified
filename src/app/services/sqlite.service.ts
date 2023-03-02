@@ -56,7 +56,7 @@ export class SQLiteService {
     const readOnly = readonly ? readonly : false;
     return await this.sqliteConnection.closeConnection(database, readOnly);
   }
-  async addUpgradeStatement(options:capSQLiteUpgradeOptions): Promise<void> {
+  async addUpgradeStatement(options:capSQLiteUpgradeOptions): Promise<void> { // NOTE: this initializes
     await this.sqlitePlugin.addUpgradeStatement(options);
     return;
   }

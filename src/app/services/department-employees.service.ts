@@ -35,7 +35,7 @@ export class DepartmentEmployeesService {
 
   async initializeDatabase() {
     // create upgrade statements
-    await this.sqliteService
+    await this.sqliteService // NOTE: this initializes
     .addUpgradeStatement({ database: this.databaseName,
                             upgrade: this.versionUpgrades});
     // create and/or open the database
@@ -152,7 +152,7 @@ export class DepartmentEmployeesService {
   async deleteEmployee(jsonEmployee: Employee): Promise<void>  {
     let employee = await this.sqliteService.findOneBy(this.mDb, "employee", {empid: jsonEmployee.empid});
     if( employee) {
-      await this.sqliteService.remove(this.mDb, "employee", {empid: jsonEmployee.empid});;
+      await this.sqliteService.remove(this.mDb, "employee", {empid: jsonEmployee.empid});
     }
   }
 

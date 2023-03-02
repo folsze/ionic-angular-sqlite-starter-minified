@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { PostsPage } from 'src/app/pages/author-posts/posts/posts.page';
 import { EmployeesPage } from 'src/app/pages/employee-dept/employees/employees.page';
 import { InitializeAppService } from 'src/app/services/initialize.app.service';
 import { SQLiteService } from 'src/app/services/sqlite.service';
@@ -25,13 +24,6 @@ export class HomePage implements OnInit {
       this.isAndroid = true;
     }
     this.isNative = this.sqliteService.native;
-  }
-  async authorpostsClick() {
-    const modal = await this.modalCtrl.create({
-      component: PostsPage,
-      canDismiss: true
-    });
-    modal.present();
   }
   async employeesClick() {
     const modal = await this.modalCtrl.create({
