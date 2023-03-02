@@ -13,7 +13,6 @@ import { AuthorsPage } from 'src/app/pages/author-posts/authors/authors.page';
 @Component({
   selector: 'cmp-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss'],
 })
 export class PostComponent implements OnInit {
   @Input() inPost!: PostData;

@@ -5,7 +5,6 @@ import { Author }  from 'src/app/models/author-posts';
 @Component({
   selector: 'cmp-authors',
   templateUrl: './authors.component.html',
-  styleUrls: ['./authors.component.scss'],
 })
 export class AuthorsComponent implements OnInit {
   @Output() toUpdateAuthor = new EventEmitter<{command: string, database: string, author: Author}>();

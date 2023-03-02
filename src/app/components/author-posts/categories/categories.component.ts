@@ -5,7 +5,6 @@ import { Category }  from 'src/app/models/author-posts';;
 @Component({
   selector: 'cmp-categories',
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.scss'],
 })
 export class CategoriesComponent implements OnInit {
   @Output() toUpdateCategory = new EventEmitter<{command: string, database: string, category: Category}>();

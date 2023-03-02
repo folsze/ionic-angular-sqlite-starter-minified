@@ -94,11 +94,11 @@ export class SQLiteService {
   }
   async findOneBy(mDb: SQLiteDBConnection, table: string, where: any): Promise<any> {
     try {
-        const key: string = Object.keys(where)[0];
-        const stmt: string = `SELECT * FROM ${table} WHERE ${key}=${where[key]};`
-        const retValues = (await mDb.query(stmt)).values;
-        const ret = retValues!.length > 0 ? retValues![0] : null;
-        return ret;
+      const key: string = Object.keys(where)[0];
+      const stmt: string = `SELECT * FROM ${table} WHERE ${key}=${where[key]};`
+      const retValues = (await mDb.query(stmt)).values;
+      const ret = retValues!.length > 0 ? retValues![0] : null;
+      return ret;
     } catch(err:any) {
       const msg = err.message ? err.message : err;
       return Promise.reject(`findOneBy err: ${msg}`);

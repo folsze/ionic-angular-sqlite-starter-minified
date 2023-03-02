@@ -6,7 +6,6 @@ import { Toast } from '@capacitor/toast';
 @Component({
   selector: 'cmp-departments',
   templateUrl: './departments.component.html',
-  styleUrls: ['./departments.component.scss'],
 })
 export class DepartmentsComponent implements OnInit {
   @Output() toUpdateDepartment = new EventEmitter<{command: string, database: string, department: Department}>();

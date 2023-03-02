@@ -7,7 +7,6 @@ import { IdsSeq } from 'src/app/models/ids-seq';
 @Component({
   selector: 'cmp-category',
   templateUrl: './category.component.html',
-  styleUrls: ['./category.component.scss'],
 })
 export class CategoryComponent implements OnInit {
   @Input() inCategory!: Category;

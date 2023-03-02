@@ -5,7 +5,6 @@ import { EmployeeData } from 'src/app/models/employee-dept';
 @Component({
   selector: 'cmp-employees',
   templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss'],
 })
 export class EmployeesComponent implements OnInit {
   @Output() toUpdateEmployee = new EventEmitter<{command: string, database: string, employee: EmployeeData}>();

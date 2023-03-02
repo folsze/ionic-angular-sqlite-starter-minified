@@ -15,15 +15,15 @@ import { IdsSeq } from '../models/ids-seq';
 @Injectable()
 export class AuthorPostsService {
   public databaseName: string;
-  public categoryList: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>([]);
-  public authorList: BehaviorSubject<Author[]> = new BehaviorSubject<Author[]>([]);
-  public postList: BehaviorSubject<PostData[]> = new BehaviorSubject<PostData[]>([]);
-  public idsSeqList: BehaviorSubject<IdsSeq[]> = new BehaviorSubject<IdsSeq[]>([]);
+  public categoryList$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>([]);
+  public authorList$: BehaviorSubject<Author[]> = new BehaviorSubject<Author[]>([]);
+  public postList$: BehaviorSubject<PostData[]> = new BehaviorSubject<PostData[]>([]);
+  public idsSeqList$: BehaviorSubject<IdsSeq[]> = new BehaviorSubject<IdsSeq[]>([]);
 
-  private isCategoryReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private isPostReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private isAuthorReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  private isIdsSeqReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isCategoryReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isPostReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isAuthorReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private isIdsSeqReady$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   private versionUpgrades = authorPostsVersionUpgrades;
   private loadToVersion = authorPostsVersionUpgrades[authorPostsVersionUpgrades.length-1].toVersion;
   private mDb!: SQLiteDBConnection;
@@ -31,6 +31,7 @@ export class AuthorPostsService {
   constructor(  private sqliteService: SQLiteService,
                 private dbVerService: DbnameVersionService,
   ) {
+    // assign ... first
     this.databaseName = environment.databaseNames.filter(x => x.name.includes('posts'))[0].name;
   }
 
@@ -69,69 +70,69 @@ export class AuthorPostsService {
   }
   async getAllData() {
     await this.getAllAuthors();
-    this.isAuthorReady.next(true);
+    this.isAuthorReady$.next(true);
     await this.getAllCategories();
-    this.isCategoryReady.next(true);
+    this.isCategoryReady$.next(true);
     await this.getAllPosts();
-    this.isPostReady.next(true);
+    this.isPostReady$.next(true);
     await this.getAllIdsSeq();
-    this.isIdsSeqReady.next(true);
+    this.isIdsSeqReady$.next(true);
   }
   /**
    * Return Category state
    * @returns
    */
   categoryState() {
-    return this.isCategoryReady.asObservable();
+    return this.isCategoryReady$.asObservable();
   }
   /**
    * Return Author state
    * @returns
    */
   authorState() {
-    return this.isAuthorReady.asObservable();
+    return this.isAuthorReady$.asObservable();
   }
   /**
    * Return Post state
    * @returns
    */
   postState() {
-    return this.isPostReady.asObservable();
+    return this.isPostReady$.asObservable();
   }
   /**
    * Return Ids Sequence state
    * @returns
    */
   idsSeqState() {
-    return this.isIdsSeqReady.asObservable();
+    return this.isIdsSeqReady$.asObservable();
   }
   /**
    * Fetch Categories
    * @returns
    */
   fetchCategories(): Observable<Category[]> {
-    return this.categoryList.asObservable();
+    return this.categoryList$.asObservable();
   }
   /**
    * Fetch Authors
    * @returns
    */
   fetchAuthors(): Observable<Author[]> {
-    return this.authorList.asObservable();
+    return this.authorList$.asObservable();
   }
   /**
    * Fetch Posts
    * @returns
    */
   fetchPosts(): Observable<PostData[]> {
-    return this.postList.asObservable();
+    return this.postList$.asObservable();
   }
   /**
    * Fetch Ids Sequence
    * @returns
    */
   fetchIdsSeq(): Observable<IdsSeq[]> {
-    return this.idsSeqList.asObservable();
+    return this.idsSeqList$.asObservable();
   }
   /**
    * Get, Create, Update an Author
@@ -210,7 +211,7 @@ export class AuthorPostsService {
    */
   async getAllAuthors(): Promise<void> {
     const authors: Author[] = (await this.mDb.query("select * from author")).values as Author[];
-    this.authorList.next(authors);
+    this.authorList$.next(authors);
   }
   /**
    * Get, Create, Update a Category
@@ -272,7 +273,7 @@ export class AuthorPostsService {
    */
   async getAllCategories(): Promise<void> {
       const categories: Category[] = (await this.mDb.query("select * from category")).values as Category[];
-      this.categoryList.next(categories);
+      this.categoryList$.next(categories);
   }
   /**
    * Get, Create, Update a Post
@@ -422,7 +423,7 @@ export class AuthorPostsService {
     // save the last post
     postsData.push(mPostData);
     // add the posts to the postList
-    this.postList.next(postsData);
+    this.postList$.next(postsData);
   }
   /**
    * Get
@@ -431,7 +432,7 @@ export class AuthorPostsService {
    */
   async getAllIdsSeq(): Promise<void> {
       const idsSeq: IdsSeq[] = (await this.mDb.query("select * from sqlite_sequence")).values as IdsSeq[];
-      this.idsSeqList.next(idsSeq);
+      this.idsSeqList$.next(idsSeq);
   }
   /**
      * Get Post from PostData

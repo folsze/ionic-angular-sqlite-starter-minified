@@ -7,7 +7,6 @@ import { IdsSeq } from 'src/app/models/ids-seq';
 @Component({
   selector: 'cmp-department',
   templateUrl: './department.component.html',
-  styleUrls: ['./department.component.scss'],
 })
 export class DepartmentComponent implements OnInit {
   @Input() inDepartment!: Department;

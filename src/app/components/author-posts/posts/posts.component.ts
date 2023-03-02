@@ -5,7 +5,6 @@ import { PostData } from 'src/app/models/author-posts';
 @Component({
   selector: 'cmp-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.scss'],
 })
 export class PostsComponent implements OnInit {
   @Output() toUpdatePost = new EventEmitter<{command: string, database: string, post: PostData}>();

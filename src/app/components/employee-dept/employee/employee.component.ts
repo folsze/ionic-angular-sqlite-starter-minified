@@ -11,7 +11,6 @@ import { DepartmentsPage } from 'src/app/pages/employee-dept/departments/departm
 @Component({
   selector: 'cmp-employee',
   templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss'],
 })
 export class EmployeeComponent implements OnInit {
   @Input() inEmployee!: EmployeeData;

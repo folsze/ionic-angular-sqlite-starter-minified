@@ -12,7 +12,6 @@ import { ModalEncryptionPage } from 'src/app/pages/modal-encryption/modal-encryp
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
   isListDisplay: boolean = false;

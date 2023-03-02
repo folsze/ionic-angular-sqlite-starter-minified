@@ -7,7 +7,6 @@ import { IdsSeq } from 'src/app/models/ids-seq';
 @Component({
   selector: 'cmp-author',
   templateUrl: './author.component.html',
-  styleUrls: ['./author.component.scss'],
 })
 export class AuthorComponent implements OnInit {
   @Input() inAuthor!: Author;
