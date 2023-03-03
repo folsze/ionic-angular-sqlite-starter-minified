@@ -24,6 +24,7 @@ export class SQLiteService {
         this.sqlitePlugin = CapacitorSQLite;
         this.sqliteConnection = new SQLiteConnection(this.sqlitePlugin);
         this.isService = true;
+        console.log('301', this.platform, this.native, this.sqlitePlugin, this.sqliteConnection);
         return true;
   }
 
@@ -41,12 +42,15 @@ export class SQLiteService {
     const retCC = (await this.sqliteConnection.checkConnectionsConsistency()).result;
     let isConn = (await this.sqliteConnection.isConnection(dbName, readonly)).result;
     if(retCC && isConn) {
+      console.log('000', this.sqliteConnection);
       db = await this.sqliteConnection.retrieveConnection(dbName, readonly);
     } else {
+      console.log(this.sqliteConnection, dbName, encrypted, mode, version, readonly);
       db = await this.sqliteConnection
                 .createConnection(dbName, encrypted, mode, version, readonly);
     }
     await db.open();
+    console.log('111', db.getTableList());
     return db;
   }
   async retrieveConnection(dbName:string, readonly: boolean): Promise<SQLiteDBConnection> {

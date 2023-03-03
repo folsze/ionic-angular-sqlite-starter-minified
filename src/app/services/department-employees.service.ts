@@ -7,10 +7,12 @@ import { DbnameVersionService } from './dbname-version.service';
 import { environment } from 'src/environments/environment';
 import { deptEmployeesVersionUpgrades } from 'src/app/upgrades/employee-dept/upgrade-statements';
 
+
+
 import { MOCK_EMPLOYEES, MOCK_DEPARTMENTS} from '../mock-data/employees-depts';
 import { Employee, EmployeeData, Department } from '../models/employee-dept';
-import { IdsSeq } from '../models/ids-seq';
 
+import { IdsSeq } from '../models/ids-seq';
 
 @Injectable()
 export class DepartmentEmployeesService {
@@ -32,15 +34,15 @@ export class DepartmentEmployeesService {
     this.databaseName = environment.databaseNames.filter(x => x.name.includes('employees'))[0].name;
   }
 
-
   async initializeDatabase() {
     // create upgrade statements
     await this.sqliteService // NOTE: this initializes
     .addUpgradeStatement({ database: this.databaseName,
                             upgrade: this.versionUpgrades});
     // create and/or open the database
+    console.log('LIST: ', this.mDb?.getTableList());
     await this.openDatabase();
-
+    console.log('LIST: ', this.mDb.getTableList());
     this.dbVerService.set(this.databaseName,this.loadToVersion);
     const isData = await this.mDb.query("select * from sqlite_sequence");
     // create database initial data
@@ -53,6 +55,7 @@ export class DepartmentEmployeesService {
     await this.getAllData();
   }
   async openDatabase() {
+    console.log('openDatabase', this.databaseName, this.loadToVersion);
     this.mDb = await this.sqliteService
       .openDatabase(this.databaseName, false, "no-encryption",
                     this.loadToVersion,false);
